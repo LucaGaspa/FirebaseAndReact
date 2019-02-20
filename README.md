@@ -1,3 +1,7 @@
+# Firebase and React
+This project was made following [A Firebase in React Tutorial for Beginners](https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial/).
+
+Moreover:  
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
