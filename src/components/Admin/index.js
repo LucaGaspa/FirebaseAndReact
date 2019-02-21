@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 
+import { AuthUserContext, withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
+import * as ROLES from "../../constants/roles";
 
 class AdminPage extends Component {
   constructor(props) {
@@ -36,12 +38,17 @@ class AdminPage extends Component {
   render() {
     const { users, loading } = this.state;
     return (
-      <div>
-        <h1>Admin</h1>
-        {loading && <div>Loading ...</div>}
+      <AuthUserContext.Consumer>
+        {authUser => (
+          <div>
+            <h1>Admin</h1>
+            <p>The Admin Page is accessible by every signed admin user.</p>
+            {loading && <div>Loading ...</div>}
 
-        <UserList users={users} />
-      </div>
+            <UserList users={users} />
+          </div>
+        )}
+      </AuthUserContext.Consumer>
     );
   }
 }
@@ -64,4 +71,6 @@ const UserList = ({ users }) => (
   </ul>
 );
 
-export default withFirebase(AdminPage);
+const condition = authUser => authUser && authUser.roles.includes(ROLES.ADMIN);
+
+export default withFirebase(withAuthorization(condition)(AdminPage));
